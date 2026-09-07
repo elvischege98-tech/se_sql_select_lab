@@ -9,17 +9,21 @@ conn = sqlite3.connect("data.sqlite")
 
 
 employee_data = pd.read_sql("""SELECT * FROM employees""", conn)
+
+print(employee_data.columns.tolist())
+
+
 print("---------------------Employee Data---------------------")
 print(employee_data)
 print("-------------------End Employee Data-------------------")
 
 # STEP 2
 # Replace None with your code
-df_first_five = employee_data.head(5)
+df_first_five = employee_data[["employeeNumber", "lastName"]]
 
 # STEP 3
 # Replace None with your code
-df_five_reverse = None
+df_five_reverse = employee_data[["lastName", "employeeNumber"]]
 
 # STEP 4
 # Replace None with your code
