@@ -50,19 +50,26 @@ df_name_length = employee_data[["lastName"]].assign(
 # STEP 7
 # Replace None with your code
 df_short_title = employee_data[["jobTitle"]].assign(
-    short_title=employee_data["jobTitle"].str[:20]
+    short_title=employee_data["jobTitle"].str[:2]
 )[["short_title"]]
+
 
 # STEP 8
 # Replace None with your code
 total_amount = pd.read_sql("""
-    SELECT SUM(ROUND(priceEach * quantityOrdered, 2)) AS total_amount
+    SELECT ROUND(priceEach * quantityOrdered, 2) AS total_price
     FROM orderDetails;
-""", conn)
+""", conn)["total_price"].sum()
+
 
 # STEP 9
-# Load the orderDetails table
-order_details = pd.read_sql("""SELECT * FROM orderDetails""", conn)
+# Load the orderDetails table together with orderDate from orders
+order_details = pd.read_sql("""
+    SELECT orderDetails.*, orders.orderDate
+    FROM orderDetails
+    JOIN orders
+    ON orderDetails.orderNumber = orders.orderNumber;
+""", conn)
 
 # Add day, month, and year columns
 df_day_month_year = order_details.assign(
