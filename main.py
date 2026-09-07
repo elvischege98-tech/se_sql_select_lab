@@ -1,14 +1,21 @@
 # STEP 1A
 # Import SQL Library and Pandas
+import sqlite3  
+import pandas as pd
 
 # STEP 1B
 # Connect to the database
-conn = None
+conn = sqlite3.connect("data.sqlite")
 
+
+employee_data = pd.read_sql("""SELECT * FROM employees""", conn)
+print("---------------------Employee Data---------------------")
+print(employee_data)
+print("-------------------End Employee Data-------------------")
 
 # STEP 2
 # Replace None with your code
-df_first_five = None
+df_first_five = employee_data.head(5)
 
 # STEP 3
 # Replace None with your code
