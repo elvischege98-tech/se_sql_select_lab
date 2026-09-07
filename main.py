@@ -31,11 +31,21 @@ df_alias = employee_data[["lastName","employeeNumber"]].rename(columns={"employe
 
 # STEP 5
 # Replace None with your code
-df_executive = None
+df_executive = employee_data.assign(
+    role=employee_data["jobTitle"].apply(
+        lambda x: "Executive" if x in [
+            "President",
+            "VP Sales",
+            "VP Marketing"
+        ] else "Not Executive"
+    )
+)
 
 # STEP 6
 # Replace None with your code
-df_name_length = None
+df_name_length = employee_data[["lastName"]].assign(
+    name_length=employee_data["lastName"].str.len()
+)[["name_length"]]
 
 # STEP 7
 # Replace None with your code
