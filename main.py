@@ -61,9 +61,12 @@ total_amount = pd.read_sql("""
 """, conn)
 
 # STEP 9
-# Replace None with your code
-df_day_month_year = employee_data.assign(
-    day=pd.to_datetime(employee_data["orderDate"]).dt.day,
-    month=pd.to_datetime(employee_data["orderDate"]).dt.month,
-    year=pd.to_datetime(employee_data["orderDate"]).dt.year
+# Load the orderDetails table
+order_details = pd.read_sql("""SELECT * FROM orderDetails""", conn)
+
+# Add day, month, and year columns
+df_day_month_year = order_details.assign(
+    day=pd.to_datetime(order_details["orderDate"]).dt.day,
+    month=pd.to_datetime(order_details["orderDate"]).dt.month,
+    year=pd.to_datetime(order_details["orderDate"]).dt.year
 )
